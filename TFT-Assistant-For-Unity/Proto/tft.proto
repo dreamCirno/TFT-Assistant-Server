@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package tft;
+
+import "google/protobuf/empty.proto";
+
+service TftAssistant {
+  rpc GetAllOrigin(google.protobuf.Empty) returns (GetAllOriginResponse) {}
+  rpc GetAllClass(google.protobuf.Empty) returns (GetAllClassResponse) {}
+//  rpc CreateLineUp(LineUp) returns ()
+}
+
+// 英雄
+message Hero {
+  // 英雄 Id
+  string id = 1;
+  // 英雄名称
+  string name = 2;
+  // 英雄耗费
+  int32 cost = 3;
+  // 种族
+  int32 originID = 4;
+  // 职业
+  repeated int32 classIDList = 5;
+}
+
+// 种族
+message Origin {
+  // 起源 Id
+  string id = 1;
+  // 起源名称
+  string name = 2;
+  // 描述
+  string description = 3;
+  // 羁绊阶级列表
+  repeated Fetters fetterList = 4;
+}
+
+// 职业
+message Class {
+  // 职业 Id
+  string id = 1;
+  // 职业名称
+  string name = 2;
+  // 描述
+  string description = 3;
+  // 羁绊阶级列表
+  repeated Fetters fetterList = 4;
+}
+
+// 羁绊
+message Fetters {
+  // 羁绊 Id
+  string id = 1;
+  // 组成数量
+  int32 count = 2;
+  // 描述
+  string description = 3;
+  // 阶级
+  int32 level = 4;
+}
+
+// 阵容英雄
+message LineUpHero {
+  // 英雄
+  Hero hero = 1;
+  // 是否为主C英雄
+  bool isCarry = 2;
+}
+
+// 阵容
+message LineUp {
+  // 名称
+  string name = 1;
+  // 阵型站位
+  map<string, LineUpHero> lineUpPos = 2;
+  // 优先三星
+  repeated LineUpHero priorityClass = 3;
+}
+
+// 获取所有种族答复
+message GetAllOriginResponse {
+  // 种族列表
+  repeated Origin originList = 1;
+}
+
+// 获取所有职业答复
+message GetAllClassResponse {
+  // 职业列表
+  repeated Class classList = 1;
+}
+
+//enum 
+
+//// 创建阵容答复
+//message CreateLineUpResponse {
+//  // 
+//}
